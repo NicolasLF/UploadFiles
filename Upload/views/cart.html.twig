@@ -1,0 +1,56 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+    <div class="ban-header">
+        <div class="title-ban"><h1>Mon Panier</h1></div>
+    </div>
+    <div class="container">
+        <div class="col-xs-3 table-total-cart">
+            <a type="button" class="commandaction mui-btn mui-btn--raised" data-toggle="modal"
+               data-target="#fileModal">
+                AJOUTER DES FICHIERS
+            </a>
+            {% if files != null %}
+                <span>Fichiers liés à la commande :</span>
+                <ul class="list-file">
+                    {% for file in files %}
+                        <li>{{ file.fileUploads.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <span>Aucun fichier n'est lié à la commande</span>
+            {% endif %}
+
+            // --------------
+            //Modal Add Files
+            // --------------
+            <div class="modal fade" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <p id="imgProfileErrors"></p>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Profile Picture</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="select-img-profile pre-scrollable row">
+                                {{ form_start(form) }}
+                                <div class="col-xs-12">
+                                    {{ form_label(form.Files) }}
+                                    <div class="mui-checkbox">
+                                        {{ form_widget(form.Files) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropzone my-dropzone" id="form_snippet_image"
+                                 action="{{ path('ajax_file_send_action') }}">
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
